@@ -4,8 +4,10 @@
     <home-swiper :banners="banners" />
     <recommend-view :recommends="recommends" />
     <feature-view />
-    <tab-control class="tab-control" :titles="['流行', '新款', '精选']" />
-    <good-list :goods="goods['pop'].list"/>
+    <tab-control class="tab-control" 
+    :titles="['流行', '新款', '精选']"
+    @tabClick="tabClick" />
+    <good-list :goods="showGoods"/>
   </div>
 </template>
 
@@ -40,7 +42,13 @@ export default {
         new: { page: 0, list: [] },
         sell: { page: 0, list: [] },
       },
+      currentType:'pop'
     };
+  },
+  computed:{
+    showGoods(){
+      return this.goods[this.currentType].list
+    }
   },
   created() {
     //1.请求多个数据
@@ -52,6 +60,7 @@ export default {
     
   },
   methods: {
+    /* 网络请求 */
     getHomeMultidata() {
       getHomeMultidata().then((res) => {
         this.banners = res.data.banner.list;
@@ -61,10 +70,26 @@ export default {
     getHomeGoods(type){
       const page=this.goods[type].page+1
       getHomeGoods(type, page).then((res) => {
-        this.goods[type].list.push(...res.data.list)
+        this.goods[type].list.push(...res.data.list)//三点是拆元素好像
         this.goods[type].page+=1
     });
+    },
+
+    /* 事件监听 */
+    tabClick(index){
+      switch(index){
+        case 0:
+          this.currentType="pop"
+          break
+        case 1:
+          this.currentType="new"
+          break
+        case 2:
+          this.currentType="sell"
+          break
+      }
     }
+
   },
 };
 </script>

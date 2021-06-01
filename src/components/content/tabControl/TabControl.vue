@@ -27,6 +27,8 @@ export default {
   methods:{
     itemClick(index){
       this.currentIndex=index
+      //子传父，自定义事件
+      this.$emit('tabClick',index)
     }
   }
 };
