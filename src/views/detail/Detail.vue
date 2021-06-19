@@ -44,7 +44,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .detail-nav{
   background-color: #fff;
   position: fixed;
