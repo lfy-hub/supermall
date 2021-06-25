@@ -43,7 +43,7 @@ export default {
       this.$emit('pullingUp')
     })
     }
-    
+    console.log(this.scroll)
   },
   methods: {
     scrollTo(x, y, time = 300) {
@@ -55,6 +55,9 @@ export default {
     refresh(){
       console.log("---")
       this.scroll && this.scroll.refresh()
+    },
+    getScrollY(){
+      return this.scroll?this.scroll.y:0
     }
   },
 };
